@@ -1,12 +1,19 @@
 import React from 'react';
-import './App.css';
-import MarchBracket from './components/MarchBracket';
+import './index.css';
+import RegionBracket from './components/RegionBracket';
 
 function App() {
   return (
-    <div className="App">
+    <div className='text-xl font-bold underline'>
       <h1>March Madness Bracket Generator</h1>
-      <MarchBracket/>
+      <div className='flex'>
+      <RegionBracket/>
+      <RegionBracket rtl/>
+      </div>
+      <div className='flex'>
+      <RegionBracket/>
+      <RegionBracket rtl/>
+      </div>
     </div>
   );
 }
