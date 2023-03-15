@@ -1,3 +1,5 @@
+import { IRoundProps } from "react-brackets"
+
 export const mockTeams = [
     { team_id: 333, team_slot: 0, team_name: 'Alabama', team_region: 'South', team_rating: 92.24 },
     { team_id: 357, team_slot: 2, team_name: 'Texas A&M-Corpus Christi', team_region: 'South', team_rating: 69.92 },
@@ -68,3 +70,86 @@ export const mockTeams = [
     { team_id: 251, team_slot: 124, team_name: 'Texas', team_region: 'Midwest', team_rating: 90.07 },
     { team_id: 2142, team_slot: 126, team_name: 'Colgate', team_region: 'Midwest', team_rating: 76.17 },
 ]
+
+export const emptyRegionProps: IRoundProps[] = [
+  {
+    title: 'Round 1',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 5,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 6,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 7,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 8,
+        teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Round 2',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Sweet 16',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Elite 8',
+    seeds: [
+      {
+        id: 1,
+        teams: [{name: ''}, {name: ''}]
+      }
+    ]
+  }
+];
