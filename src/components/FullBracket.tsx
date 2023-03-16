@@ -42,9 +42,7 @@ const FullBracket = (props: FullBracketProps) => {
         roundTitle: string, nextRoundTitle: string, comp: (arg: any[]) => any[]): IRoundProps => {
         let currentSeeds = roundProps.find(round => round.title === roundTitle)?.seeds
         let currentTeams = currentSeeds?.map(seed => seed.teams)
-        console.log(currentTeams)
         let nextTeams = currentTeams?.map(match => comp(match))
-        console.log(nextTeams)
         let nextSeeds = nextTeams?.reduce(
             (result: ISeedProps[], val, ind, array: any[]) => {
                 if(ind % 2 === 0)
@@ -52,17 +50,29 @@ const FullBracket = (props: FullBracketProps) => {
                 return result;
             }, []
         )
-        console.log(nextSeeds)
         let nextRound: IRoundProps = { title: nextRoundTitle, seeds: nextSeeds ? nextSeeds : []}
-        console.log(eastProps)
         return nextRound
     }
 
-    const simulate = () => {
-        setSouthProps([...southProps.map(round => round.title === 'Round 2' ? chooseWinners(southProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+    const simulateRound1 = () => {
+        console.log('simulating 1st round')
+        setSouthProps(s => [...s.map(round => round.title === 'Round 2' ? chooseWinners(s, 'Round 1', 'Round 2', chooseFirst) : round)])
         setMidwestProps([...midwestProps.map(round => round.title === 'Round 2' ? chooseWinners(midwestProps, 'Round 1', 'Round 2', chooseFirst) : round)])
         setEastProps([...eastProps.map(round => round.title === 'Round 2' ? chooseWinners(eastProps, 'Round 1', 'Round 2', chooseFirst) : round)])
         setWestProps([...westProps.map(round => round.title === 'Round 2' ? chooseWinners(westProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+    }
+
+    const simulateRound2 = () => {
+        console.log('simulating 2nd round')
+        setSouthProps(s => [...s.map(round => round.title === 'Sweet 16' ? chooseWinners(s, 'Round 2', 'Sweet 16', chooseFirst) : round)])
+        setMidwestProps([...midwestProps.map(round => round.title === 'Sweet 16' ? chooseWinners(midwestProps, 'Round 2', 'Sweet 16', chooseFirst) : round)])
+        setEastProps([...eastProps.map(round => round.title === 'Sweet 16' ? chooseWinners(eastProps, 'Round 2', 'Sweet 16', chooseFirst) : round)])
+        setWestProps([...westProps.map(round => round.title === 'Sweet 16' ? chooseWinners(westProps, 'Round 2', 'Sweet 16', chooseFirst) : round)])
+    }
+
+    const simulate = () => {
+        simulateRound1()
+        simulateRound2()
     }
 
     useEffect(() => {
@@ -79,7 +89,9 @@ const FullBracket = (props: FullBracketProps) => {
 
   return (
     <div>
-        <button onClick={simulate}>winners</button>
+        <button onClick={simulateRound1}>round 1</button>
+        <button onClick={simulateRound2}>round 2</button>
+        <button onClick={simulate}>whole</button>
       <div className='flex'>
       <RegionBracket roundProps={southProps}/>
       <RegionBracket rtl roundProps={midwestProps}/>
