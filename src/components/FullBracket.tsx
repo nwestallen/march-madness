@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { IRenderSeedProps, IRoundProps } from 'react-brackets'
+import { IRenderSeedProps, IRoundProps, ISeedProps } from 'react-brackets'
 import CustomSeed from './CustomSeed'
 import RegionBracket from './RegionBracket'
 import { emptyRegionProps, mockTeams } from '../constants/mockData'
@@ -26,6 +26,8 @@ const mapRound = (roundTeams: any[], round: string) => {
   }
 }
 
+const chooseFirst = (match: any[]) => match[0]
+
 type FullBracketProps = {}
 
 const FullBracket = (props: FullBracketProps) => {
@@ -34,6 +36,34 @@ const FullBracket = (props: FullBracketProps) => {
     const [ eastProps, setEastProps ] = useState<IRoundProps[]>(emptyRegionProps)
     const [ midwestProps, setMidwestProps ] = useState<IRoundProps[]>(emptyRegionProps)
     const [ westProps, setWestProps ] = useState<IRoundProps[]>(emptyRegionProps)
+
+    const chooseWinners = (
+        roundProps: IRoundProps[], 
+        roundTitle: string, nextRoundTitle: string, comp: (arg: any[]) => any[]): IRoundProps => {
+        let currentSeeds = roundProps.find(round => round.title === roundTitle)?.seeds
+        let currentTeams = currentSeeds?.map(seed => seed.teams)
+        console.log(currentTeams)
+        let nextTeams = currentTeams?.map(match => comp(match))
+        console.log(nextTeams)
+        let nextSeeds = nextTeams?.reduce(
+            (result: ISeedProps[], val, ind, array: any[]) => {
+                if(ind % 2 === 0)
+                result.push({id: ind/2 + 1, teams: array.slice(ind, ind + 2)})
+                return result;
+            }, []
+        )
+        console.log(nextSeeds)
+        let nextRound: IRoundProps = { title: nextRoundTitle, seeds: nextSeeds ? nextSeeds : []}
+        console.log(eastProps)
+        return nextRound
+    }
+
+    const simulate = () => {
+        setSouthProps([...southProps.map(round => round.title === 'Round 2' ? chooseWinners(southProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+        setMidwestProps([...midwestProps.map(round => round.title === 'Round 2' ? chooseWinners(midwestProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+        setEastProps([...eastProps.map(round => round.title === 'Round 2' ? chooseWinners(eastProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+        setWestProps([...westProps.map(round => round.title === 'Round 2' ? chooseWinners(westProps, 'Round 1', 'Round 2', chooseFirst) : round)])
+    }
 
     useEffect(() => {
       let south = mapRound(teams.filter(team => team.team_region === 'South'), 'Round 1')
@@ -49,6 +79,7 @@ const FullBracket = (props: FullBracketProps) => {
 
   return (
     <div>
+        <button onClick={simulate}>winners</button>
       <div className='flex'>
       <RegionBracket roundProps={southProps}/>
       <RegionBracket rtl roundProps={midwestProps}/>
