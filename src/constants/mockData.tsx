@@ -4,7 +4,6 @@ import { TeamStats } from "./types";
 export const mockTeams: TeamStats[] = [
     { team_id: 333, team_slot: 0, team_name: 'Alabama', team_region: 'South', team_rating: 92.24 },
     { team_id: 357, team_slot: 2, team_name: 'Texas A&M-Corpus Christi', team_region: 'South', team_rating: 69.92 },
-    { team_id: 2546, team_slot: 3, team_name: 'Southeast Missouri State', team_region: 'South', team_rating: 67.7 },
     { team_id: 120, team_slot: 4, team_name: 'Maryland', team_region: 'South', team_rating: 84.48 },
     { team_id: 277, team_slot: 6, team_name: 'West Virginia', team_region: 'South', team_rating: 84.14 },
     { team_id: 21, team_slot: 8, team_name: 'San Diego State', team_region: 'South', team_rating: 86.07 },
@@ -21,7 +20,6 @@ export const mockTeams: TeamStats[] = [
     { team_id: 163, team_slot: 30, team_name: 'Princeton', team_region: 'South', team_rating: 74.83 },
     { team_id: 2509, team_slot: 32, team_name: 'Purdue', team_region: 'East', team_rating: 89.6 },
     { team_id: 2640, team_slot: 34, team_name: 'Texas Southern', team_region: 'East', team_rating: 66.56 },
-    { team_id: 161, team_slot: 35, team_name: 'Fairleigh Dickinson', team_region: 'East', team_rating: 64.39 },
     { team_id: 235, team_slot: 36, team_name: 'Memphis', team_region: 'East', team_rating: 84.18 },
     { team_id: 2226, team_slot: 38, team_name: 'Florida Atlantic', team_region: 'East', team_rating: 82.56 },
     { team_id: 150, team_slot: 40, team_name: 'Duke', team_region: 'East', team_rating: 87.13 },
@@ -46,7 +44,6 @@ export const mockTeams: TeamStats[] = [
     { team_id: 314, team_slot: 78, team_name: 'Iona', team_region: 'West', team_rating: 79.58 },
     { team_id: 2628, team_slot: 80, team_name: 'Texas Christian', team_region: 'West', team_rating: 85.42 },
     { team_id: 9, team_slot: 82, team_name: 'Arizona State', team_region: 'West', team_rating: 80.36 },
-    { team_id: 2440, team_slot: 83, team_name: 'Nevada', team_region: 'West', team_rating: 79.6 },
     { team_id: 2250, team_slot: 84, team_name: 'Gonzaga', team_region: 'West', team_rating: 89.9 },
     { team_id: 2253, team_slot: 86, team_name: 'Grand Canyon', team_region: 'West', team_rating: 75.91 },
     { team_id: 77, team_slot: 88, team_name: 'Northwestern', team_region: 'West', team_rating: 82.24 },
@@ -69,7 +66,8 @@ export const mockTeams: TeamStats[] = [
     { team_id: 245, team_slot: 120, team_name: 'Texas A&M', team_region: 'Midwest', team_rating: 85.51 },
     { team_id: 213, team_slot: 122, team_name: 'Penn State', team_region: 'Midwest', team_rating: 82.66 },
     { team_id: 251, team_slot: 124, team_name: 'Texas', team_region: 'Midwest', team_rating: 90.07 },
-    { team_id: 2142, team_slot: 126, team_name: 'Colgate', team_region: 'Midwest', team_rating: 76.17 },
+    { team_id: 2142, team_slot: 126, team_name: 'Colgate', team_region: 'Midwest', team_rating: 76.17 },  
+    { team_id: 2142, team_slot: 23, team_name: 'Colgate', team_region: 'Midwest', team_rating: 76.17 },  
 ]
 
 export const emptyRegionProps: IRoundProps[] = [
@@ -155,7 +153,7 @@ export const emptyRegionProps: IRoundProps[] = [
   }
 ];
 
-export const initSouthProps: IRoundProps[] = [
+export const initSouth: IRoundProps[] = [
   {
     title: 'Round 1',
     seeds: [
@@ -198,19 +196,19 @@ export const initSouthProps: IRoundProps[] = [
     seeds: [
       {
         id: 1,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 1 }, { name: '', slot: 5 }],
       },
       {
         id: 2,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 9 }, { name: '', slot: 13 }],
       },
       {
         id: 3,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 17 }, { name: '', slot: 21 }],
       },
       {
         id: 4,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 25 }, { name: '', slot: 29 }],
       },
     ],
   },
@@ -219,11 +217,11 @@ export const initSouthProps: IRoundProps[] = [
     seeds: [
       {
         id: 1,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 3 }, { name: '', slot: 11 }],
       },
       {
         id: 2,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: '', slot: 19 }, { name: '', slot: 27 }],
       },
     ],
   },
@@ -232,7 +230,256 @@ export const initSouthProps: IRoundProps[] = [
     seeds: [
       {
         id: 1,
-        teams: [{name: ''}, {name: ''}]
+        teams: [{name: '', slot: 7 }, {name: '', slot: 23 }]
+      }
+    ]
+  }
+];
+
+export const initEast: IRoundProps[] = [
+  {
+    title: 'Round 1',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 32 }, { name: '', slot: 34 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 36 }, { name: '', slot: 38 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 40 }, { name: '', slot: 42 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 44 }, { name: '', slot: 46 }],
+      },
+      {
+        id: 5,
+        teams: [{ name: '', slot: 48 }, { name: '', slot: 50 }],
+      },
+      {
+        id: 6,
+        teams: [{ name: '', slot: 52 }, { name: '', slot: 54 }],
+      },
+      {
+        id: 7,
+        teams: [{ name: '', slot: 56 }, { name: '', slot: 58 }],
+      },
+      {
+        id: 8,
+        teams: [{ name: '', slot: 60 }, { name: '', slot: 62 }],
+      },
+    ],
+  },
+  {
+    title: 'Round 2',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 33 }, { name: '', slot: 37 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 41 }, { name: '', slot: 45 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 49 }, { name: '', slot: 53 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 57 }, { name: '', slot: 61 }],
+      },
+    ],
+  },
+  {
+    title: 'Sweet 16',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 35 }, { name: '', slot: 43 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 51 }, { name: '', slot: 59 }],
+      },
+    ],
+  },
+  {
+    title: 'Elite 8',
+    seeds: [
+      {
+        id: 1,
+        teams: [{name: '', slot: 39 }, {name: '', slot: 55 }]
+      }
+    ]
+  }
+];
+
+export const initWest: IRoundProps[] = [
+  {
+    title: 'Round 1',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 64 }, { name: '', slot: 66 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 68 }, { name: '', slot: 70 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 72 }, { name: '', slot: 74 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 76 }, { name: '', slot: 78 }],
+      },
+      {
+        id: 5,
+        teams: [{ name: '', slot: 80 }, { name: '', slot: 82 }],
+      },
+      {
+        id: 6,
+        teams: [{ name: '', slot: 84 }, { name: '', slot: 86 }],
+      },
+      {
+        id: 7,
+        teams: [{ name: '', slot: 88 }, { name: '', slot: 90 }],
+      },
+      {
+        id: 8,
+        teams: [{ name: '', slot: 92 }, { name: '', slot: 94 }],
+      },
+    ],
+  },
+  {
+    title: 'Round 2',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 65 }, { name: '', slot: 69 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 73 }, { name: '', slot: 77 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 81 }, { name: '', slot: 85 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 89 }, { name: '', slot: 93 }],
+      },
+    ],
+  },
+  {
+    title: 'Sweet 16',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 67 }, { name: '', slot: 75 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 83 }, { name: '', slot: 91 }],
+      },
+    ],
+  },
+  {
+    title: 'Elite 8',
+    seeds: [
+      {
+        id: 1,
+        teams: [{name: '', slot: 71 }, {name: '', slot: 87 }]
+      }
+    ]
+  }
+];
+
+export const initMidwest: IRoundProps[] = [
+  {
+    title: 'Round 1',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 96 }, { name: '', slot: 98 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 100 }, { name: '', slot: 102 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 104 }, { name: '', slot: 106 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 108 }, { name: '', slot: 110 }],
+      },
+      {
+        id: 5,
+        teams: [{ name: '', slot: 112 }, { name: '', slot: 114 }],
+      },
+      {
+        id: 6,
+        teams: [{ name: '', slot: 116 }, { name: '', slot: 118 }],
+      },
+      {
+        id: 7,
+        teams: [{ name: '', slot: 120 }, { name: '', slot: 122 }],
+      },
+      {
+        id: 8,
+        teams: [{ name: '', slot: 124 }, { name: '', slot: 126 }],
+      },
+    ],
+  },
+  {
+    title: 'Round 2',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 97 }, { name: '', slot: 101 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 105 }, { name: '', slot: 109 }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 113 }, { name: '', slot: 117 }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 121 }, { name: '', slot: 125 }],
+      },
+    ],
+  },
+  {
+    title: 'Sweet 16',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 99 }, { name: '', slot: 107 }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 115 }, { name: '', slot: 123 }],
+      },
+    ],
+  },
+  {
+    title: 'Elite 8',
+    seeds: [
+      {
+        id: 1,
+        teams: [{name: '', slot: 103 }, {name: '', slot: 119 }]
       }
     ]
   }

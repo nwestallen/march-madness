@@ -1,7 +1,12 @@
-import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from 'react-brackets';
-import React from 'react';
+import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
+import React from "react";
 
-const CustomSeed = ({seed, breakpoint, roundIndex, seedIndex}: IRenderSeedProps) => {
+const CustomSeed = ({
+  seed,
+  breakpoint,
+  roundIndex,
+  seedIndex,
+}: IRenderSeedProps) => {
   // breakpoint passed to Bracket component
   // to check if mobile view is triggered or not
 
@@ -12,8 +17,12 @@ const CustomSeed = ({seed, breakpoint, roundIndex, seedIndex}: IRenderSeedProps)
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
         <div>
-          <SeedTeam style={{ color: 'white' }}>{seed.teams[0]?.name || 'TBD'}</SeedTeam>
-          <SeedTeam style={{ color: 'white' }}>{seed.teams[1]?.name || 'TBD'}</SeedTeam>
+          <SeedTeam style={{ color: "white" }}>
+            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"}
+          </SeedTeam>
+          <SeedTeam style={{ color: "white" }}>
+            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"}
+          </SeedTeam>
         </div>
       </SeedItem>
       <button>Test</button>
@@ -21,4 +30,4 @@ const CustomSeed = ({seed, breakpoint, roundIndex, seedIndex}: IRenderSeedProps)
   );
 };
 
-export default CustomSeed
+export default CustomSeed;
