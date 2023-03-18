@@ -6,6 +6,8 @@ const CustomSeed = ({seed, breakpoint, roundIndex, seedIndex}: IRenderSeedProps)
   // to check if mobile view is triggered or not
 
   // mobileBreakpoint is required to be passed down to a seed
+
+  //onClick callback to update FullBracket state
   return (
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
@@ -14,6 +16,7 @@ const CustomSeed = ({seed, breakpoint, roundIndex, seedIndex}: IRenderSeedProps)
           <SeedTeam style={{ color: 'white' }}>{seed.teams[1]?.name || 'TBD'}</SeedTeam>
         </div>
       </SeedItem>
+      <button>Test</button>
     </Seed>
   );
 };

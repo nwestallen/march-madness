@@ -1,6 +1,7 @@
 import { IRoundProps } from "react-brackets"
+import { TeamStats } from "./types";
 
-export const mockTeams = [
+export const mockTeams: TeamStats[] = [
     { team_id: 333, team_slot: 0, team_name: 'Alabama', team_region: 'South', team_rating: 92.24 },
     { team_id: 357, team_slot: 2, team_name: 'Texas A&M-Corpus Christi', team_region: 'South', team_rating: 69.92 },
     { team_id: 2546, team_slot: 3, team_name: 'Southeast Missouri State', team_region: 'South', team_rating: 67.7 },
@@ -77,7 +78,7 @@ export const emptyRegionProps: IRoundProps[] = [
     seeds: [
       {
         id: 1,
-        teams: [{ name: '' }, { name: '' }],
+        teams: [{ name: ''}, { name: ''}],
       },
       {
         id: 2,
@@ -106,6 +107,89 @@ export const emptyRegionProps: IRoundProps[] = [
       {
         id: 8,
         teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Round 2',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 3,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 4,
+        teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Sweet 16',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '' }, { name: '' }],
+      },
+      {
+        id: 2,
+        teams: [{ name: '' }, { name: '' }],
+      },
+    ],
+  },
+  {
+    title: 'Elite 8',
+    seeds: [
+      {
+        id: 1,
+        teams: [{name: ''}, {name: ''}]
+      }
+    ]
+  }
+];
+
+export const initSouthProps: IRoundProps[] = [
+  {
+    title: 'Round 1',
+    seeds: [
+      {
+        id: 1,
+        teams: [{ name: '', slot: 0}, { name: '', slot: 2}],
+      },
+      {
+        id: 2,
+        teams: [{ name: '', slot: 4}, { name: '', slot: 6}],
+      },
+      {
+        id: 3,
+        teams: [{ name: '', slot: 8}, { name: '', slot: 10}],
+      },
+      {
+        id: 4,
+        teams: [{ name: '', slot: 12 }, { name: '', slot: 14 }],
+      },
+      {
+        id: 5,
+        teams: [{ name: '', slot: 16}, { name: '', slot: 18}],
+      },
+      {
+        id: 6,
+        teams: [{ name: '', slot: 20}, { name: '', slot: 22 }],
+      },
+      {
+        id: 7,
+        teams: [{ name: '', slot: 24 }, { name: '', slot: 26 }],
+      },
+      {
+        id: 8,
+        teams: [{ name: '', slot: 28 }, { name: '', slot: 30}],
       },
     ],
   },
