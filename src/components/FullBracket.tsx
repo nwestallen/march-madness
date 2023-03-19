@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { IRenderSeedProps, IRoundProps, ISeedProps } from "react-brackets";
 import CustomSeed from "./CustomSeed";
 import RegionBracket from "./RegionBracket";
-import { initEast, initMidwest, initSouth, initWest, mockTeams } from "../constants/mockData";
+import { initEast, initMidwest, initSouth, initWest } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
+import { DataContext } from "./Tournament";
 
 const four: IRenderSeedProps = {
   seed: { id: 1, teams: [] },
@@ -12,11 +13,11 @@ const four: IRenderSeedProps = {
   breakpoint: 100,
 };
 
-type team = { [key: string]: any; name?: string };
+type Team = { [key: string]: any; name?: string };
 
-const mapBrack = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
-  let updateTeam = (t: team): team => ({...t, name: teamInfo.find(x => x.team_slot === t.slot)?.team_name})
-  let updateTeams = (ts: team[]): team[] => ts.map(t => updateTeam(t))
+const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
+  let updateTeam = (t: Team): Team => ({...t, name: teamInfo.find(x => x.team_slot === t.slot)?.team_name})
+  let updateTeams = (ts: Team[]): Team[] => ts.map(t => updateTeam(t))
   let updateSeed = (s: ISeedProps): ISeedProps => ({...s, teams: updateTeams(s.teams)})
   let updateSeeds =(ss: ISeedProps[]): ISeedProps[] => ss.map(s => updateSeed(s))
   let updateRound = (r: IRoundProps): IRoundProps => ({...r, seeds: updateSeeds(r.seeds)})
@@ -24,20 +25,27 @@ const mapBrack = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => 
   return updateRounds(dest)
 }
 
-const chooseFirst = (match: team[]): team => match[0];
-
-type FullBracketProps = {};
+type FullBracketProps = {
+};
 
 const FullBracket = (props: FullBracketProps) => {
+
+  const { teamData, setTeamData } = useContext(DataContext)
+
+  const handleClick = () => {
+    console.log('clicked Add Team')
+    setTeamData([...teamData, {team_name: 'Alabama', team_slot: 7, team_id: 333, team_region: 'South', team_rating: 100 }])
+  }
 
   useEffect(() => {
   }, []);
 
   return (
     <div>
+      <button onClick={handleClick}>Add Team</button>
       <div className="flex">
-        <RegionBracket key='South' roundProps={mapBrack(mockTeams, initSouth)} />
-        <RegionBracket key= 'Midwest' rtl roundProps={mapBrack(mockTeams, initMidwest)} />
+        <RegionBracket key='South' roundProps={mapBracket(teamData, initSouth)} />
+        <RegionBracket key= 'Midwest' rtl roundProps={mapBracket(teamData, initMidwest)} />
       </div>
       <div className="flex">
         <h4>Final Four</h4>
@@ -59,8 +67,8 @@ const FullBracket = (props: FullBracketProps) => {
         </div>
       </div>
       <div className="flex">
-        <RegionBracket key='East' roundProps={mapBrack(mockTeams, initEast)} />
-        <RegionBracket key='West' rtl roundProps={mapBrack(mockTeams, initWest)} />
+        <RegionBracket key='East' roundProps={mapBracket(teamData, initEast)} />
+        <RegionBracket key='West' rtl roundProps={mapBracket(teamData, initWest)} />
       </div>
     </div>
   );

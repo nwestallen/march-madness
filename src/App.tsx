@@ -1,12 +1,12 @@
-import React from 'react';
-import './index.css';
-import FullBracket from './components/FullBracket';
+import React from "react";
+import Tournament from "./components/Tournament";
+import "./index.css";
 
 function App() {
   return (
-    <div className='text-xl font-bold underline'>
+    <div className="text-xl font-bold underline">
       <h1>March Madness Bracket Generator</h1>
-      <FullBracket/>
+      <Tournament />
     </div>
   );
 }
