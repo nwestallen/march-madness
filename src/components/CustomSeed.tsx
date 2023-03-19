@@ -1,5 +1,19 @@
 import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
-import React from "react";
+import React, { useContext } from "react";
+import { TeamStats } from "../constants/types";
+import { DataContext } from "./Tournament";
+
+
+const chooseWinner = (teams: TeamStats[]): TeamStats => {
+  let winner = teams[0]
+  return { 
+    team_id: winner.team_id,
+    team_name: winner.team_name,
+    team_rating: winner.team_rating,
+    team_region: winner.team_region,
+    team_slot: (teams[0].team_slot + teams[1].team_slot) / 2
+  }
+}
 
 const CustomSeed = ({
   seed,
@@ -7,12 +21,19 @@ const CustomSeed = ({
   roundIndex,
   seedIndex,
 }: IRenderSeedProps) => {
-  // breakpoint passed to Bracket component
-  // to check if mobile view is triggered or not
 
-  // mobileBreakpoint is required to be passed down to a seed
+  const { teamData, setTeamData } = useContext(DataContext)
 
-  //onClick callback to update FullBracket state
+  const handleClick = () => {
+    console.log('match click')
+    setTeamData([...teamData, chooseWinner(
+      [
+        teamData.find(t => t.team_slot === seed.teams[0].slot)!,
+        teamData.find(t => t.team_slot === seed.teams[1].slot)!
+      ]
+      )])
+  }
+
   return (
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
@@ -25,7 +46,7 @@ const CustomSeed = ({
           </SeedTeam>
         </div>
       </SeedItem>
-      <button>Test</button>
+      <button onClick={handleClick}>Test</button>
     </Seed>
   );
 };

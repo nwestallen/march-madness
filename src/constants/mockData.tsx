@@ -1,4 +1,4 @@
-import { IRoundProps } from "react-brackets";
+import { IRoundProps, ISeedProps } from "react-brackets";
 import { TeamStats } from "./types";
 
 export const mockTeams: TeamStats[] = [
@@ -446,13 +446,6 @@ export const mockTeams: TeamStats[] = [
   {
     team_id: 2142,
     team_slot: 126,
-    team_name: "Colgate",
-    team_region: "Midwest",
-    team_rating: 76.17,
-  },
-  {
-    team_id: 2142,
-    team_slot: 23,
     team_name: "Colgate",
     team_region: "Midwest",
     team_rating: 76.17,
@@ -1053,3 +1046,27 @@ export const initMidwest: IRoundProps[] = [
     ],
   },
 ];
+
+export const leftFourInit: ISeedProps = {
+  teams: [
+    { name: "", slot: 15 },
+    { name: "", slot: 47 },
+  ],
+  id: 1,
+};
+
+export const rightFourInit: ISeedProps = {
+  teams: [
+    { name: "", slot: 79 },
+    { name: "", slot: 111 },
+  ],
+  id: 1,
+};
+
+export const finalInit: ISeedProps = {
+  teams: [
+    { name: "", slot: 31 },
+    { name: "", slot: 95 },
+  ],
+  id: 1,
+};
