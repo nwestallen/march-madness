@@ -1,22 +1,7 @@
 import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
-import React, { useContext } from "react";
-import { TeamStats } from "../constants/types";
+import React, { useContext, useState } from "react";
 import { DataContext } from "./Tournament";
-
-const chooseWinner = (teams: TeamStats[]): TeamStats => {
-  let p1 =
-    1 /
-    (1 +
-      10 ** ((-(teams[0].team_rating - teams[1].team_rating) * 30.464) / 400));
-  let winner = Math.random() < p1 ? teams[0] : teams[1];
-  return {
-    team_id: winner.team_id,
-    team_name: winner.team_name,
-    team_rating: winner.team_rating,
-    team_region: winner.team_region,
-    team_slot: (teams[0].team_slot + teams[1].team_slot) / 2,
-  };
-};
+import { chooseWinner, prob } from "../util/calc";
 
 const CustomSeed = ({
   seed,
@@ -25,6 +10,7 @@ const CustomSeed = ({
   seedIndex,
 }: IRenderSeedProps) => {
   const { teamData, setTeamData } = useContext(DataContext);
+  const [ probs, setProbs ] = useState<string[]>(['',''])
 
   const handleClick = () => {
     console.log("match click");
@@ -37,25 +23,33 @@ const CustomSeed = ({
     ]);
   };
 
-  const handleHover = (
+  const handleEnter = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    console.log("hovering, rating: " + seed.teams[0].rating);
+    const p1 = Math.round((prob(seed.teams[0].rating, seed.teams[1].rating) + Number.EPSILON) * 100)
+    setProbs([`(${p1}%)`, `(${100-p1}%)`])
   };
+
+  const handleLeave = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
+    setProbs(['',''])
+  }
 
   return (
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
         <div
           className="bg-slate-800"
-          onMouseOver={(e) => handleHover(e)}
+          onMouseEnter={(e) => handleEnter(e)}
+          onMouseLeave={(e) => handleLeave(e)}
           onClick={(e) => console.log("clicked div")}
         >
           <SeedTeam style={{ color: "white" }}>
-            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"}
+            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"} {probs[0]}
           </SeedTeam>
           <SeedTeam style={{ color: "white" }}>
-            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"}
+            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"} {probs[1]}
           </SeedTeam>
         </div>
       </SeedItem>

@@ -13,6 +13,7 @@ import {
 } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import { DataContext } from "./Tournament";
+import { chooseWinner } from "../util/calc";
 
 type Team = { [key: string]: any; name?: string };
 
@@ -39,21 +40,7 @@ const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
       { ...team2, name: team2?.team_name, slot: dest.teams[1].slot },
     ],
   };
-  console.log(result);
   return result;
-};
-
-const chooseWinner = (teams: TeamStats[]): TeamStats => {
-  let p1 =
-    1 / (1 + 10 ** ((-(teams[0].team_rating - teams[1].team_rating) * 30.464) / 400));
-  let winner = Math.random() < p1 ? teams[0] : teams[1];
-  return {
-    team_id: winner.team_id,
-    team_name: winner.team_name,
-    team_rating: winner.team_rating,
-    team_region: winner.team_region,
-    team_slot: (teams[0].team_slot + teams[1].team_slot) / 2,
-  };
 };
 
 const simulateRound = (teamStats: TeamStats[]): TeamStats[] => {
