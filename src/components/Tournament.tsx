@@ -1,19 +1,24 @@
-import React, { createContext, useState } from "react";
+import React, { createContext,  useState } from "react";
 import { mockTeams } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import FullBracket from "./FullBracket";
 
 type Props = {};
 
-const defaultDataContext = {
+type DataContextType = {
+    teamData: TeamStats[];
+    setTeamData: React.Dispatch<React.SetStateAction<TeamStats[]>>
+}
+
+const defaultDataContext: DataContextType = {
     teamData: mockTeams,
-    setTeamData: (teamData: TeamStats[]) => {}
+    setTeamData: (teamData) => {}
 }
 
 export const DataContext = createContext(defaultDataContext)
 
 const Tournament = (props: Props) => {
-  const [teamData, setTeamData] = useState<TeamStats[]>(mockTeams)
+  const [teamData, setTeamData] = useState<TeamStats[]>(defaultDataContext.teamData)
   return (
     <DataContext.Provider value={{teamData, setTeamData}}>
       <FullBracket />

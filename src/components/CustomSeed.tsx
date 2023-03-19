@@ -5,7 +5,11 @@ import { DataContext } from "./Tournament";
 
 
 const chooseWinner = (teams: TeamStats[]): TeamStats => {
-  let winner = teams[0]
+  let p1 =
+    1 /
+    (1 +
+      10 ** ((-(teams[0].team_rating - teams[1].team_rating) * 30.464) / 400));
+  let winner = Math.random() < p1 ? teams[0] : teams[1];
   return { 
     team_id: winner.team_id,
     team_name: winner.team_name,
@@ -34,10 +38,14 @@ const CustomSeed = ({
       )])
   }
 
+  const handleHover = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    console.log('hovering, rating: ' + seed.teams[0].rating)
+  }
+
   return (
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
-        <div>
+        <div onMouseOver={e => handleHover(e)} onClick={e => console.log('clicked div')}>
           <SeedTeam style={{ color: "white" }}>
             {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"}
           </SeedTeam>

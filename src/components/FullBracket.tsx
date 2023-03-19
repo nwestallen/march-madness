@@ -11,7 +11,7 @@ type Team = { [key: string]: any; name?: string };
 const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
   let updateTeam = (t: Team): Team => { 
     const tm = teamInfo.find(x => x.team_slot === t.slot)
-    return {...t, name: tm?.team_name, slot: t.slot}
+    return {...t, name: tm?.team_name, slot: t.slot, rating: tm?.team_rating}
   }
   let updateTeams = (ts: Team[]): Team[] => ts.map(t => updateTeam(t))
   let updateSeed = (s: ISeedProps): ISeedProps => ({...s, teams: updateTeams(s.teams)})
@@ -33,7 +33,8 @@ const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps) : ISeedProps => {
 }
 
 const chooseWinner = (teams: TeamStats[]): TeamStats => {
-  let winner = teams[0]
+  let p1 = 1/(1 + 10**(-(teams[0].team_rating - teams[1].team_rating)*30.464/400))
+  let winner = Math.random() < p1 ? teams[0] : teams[1]
   return { 
     team_id: winner.team_id,
     team_name: winner.team_name,
@@ -41,6 +42,16 @@ const chooseWinner = (teams: TeamStats[]): TeamStats => {
     team_region: winner.team_region,
     team_slot: (teams[0].team_slot + teams[1].team_slot) / 2
   }
+}
+
+const simulateRound = (teamStats: TeamStats[]): TeamStats[] => {
+  const newTeams: TeamStats[] = []
+  teamStats.forEach((value: TeamStats, index: number) => {
+    if (index % 2 === 0) {
+      newTeams.push(chooseWinner(teamStats.slice(index, index+2)))
+    }
+  })
+  return newTeams
 }
 
 type FullBracketProps = {
@@ -51,16 +62,11 @@ const FullBracket = (props: FullBracketProps) => {
   const { teamData, setTeamData } = useContext(DataContext)
 
   const handleClick = () => {
-    console.log('clicked sim round')
-    const newTeams: TeamStats[] = []
-    teamData.forEach((value: TeamStats, index: number) => {
-      if (index % 2 === 0) {
-      console.log(teamData.slice(index, index + 2))
-      newTeams.push(chooseWinner(teamData.slice(index, index+2)))
-    }
-    }
-    )
-    setTeamData([...teamData, ...newTeams])
+    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)])
+    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)])
+    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)])
+    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)])
+    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)])
   }
 
   return (
