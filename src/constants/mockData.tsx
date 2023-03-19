@@ -537,7 +537,7 @@ export const emptyRegionProps: IRoundProps[] = [
 
 export const initSouth: IRoundProps[] = [
   {
-    title: "Round 1",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -598,7 +598,7 @@ export const initSouth: IRoundProps[] = [
     ],
   },
   {
-    title: "Round 2",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -631,7 +631,7 @@ export const initSouth: IRoundProps[] = [
     ],
   },
   {
-    title: "Sweet 16",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -650,7 +650,7 @@ export const initSouth: IRoundProps[] = [
     ],
   },
   {
-    title: "Elite 8",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -665,7 +665,7 @@ export const initSouth: IRoundProps[] = [
 
 export const initEast: IRoundProps[] = [
   {
-    title: "Round 1",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -726,7 +726,7 @@ export const initEast: IRoundProps[] = [
     ],
   },
   {
-    title: "Round 2",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -759,7 +759,7 @@ export const initEast: IRoundProps[] = [
     ],
   },
   {
-    title: "Sweet 16",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -778,7 +778,7 @@ export const initEast: IRoundProps[] = [
     ],
   },
   {
-    title: "Elite 8",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -793,7 +793,7 @@ export const initEast: IRoundProps[] = [
 
 export const initWest: IRoundProps[] = [
   {
-    title: "Round 1",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -854,7 +854,7 @@ export const initWest: IRoundProps[] = [
     ],
   },
   {
-    title: "Round 2",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -887,7 +887,7 @@ export const initWest: IRoundProps[] = [
     ],
   },
   {
-    title: "Sweet 16",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -906,7 +906,7 @@ export const initWest: IRoundProps[] = [
     ],
   },
   {
-    title: "Elite 8",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -921,7 +921,7 @@ export const initWest: IRoundProps[] = [
 
 export const initMidwest: IRoundProps[] = [
   {
-    title: "Round 1",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -982,7 +982,7 @@ export const initMidwest: IRoundProps[] = [
     ],
   },
   {
-    title: "Round 2",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -1015,7 +1015,7 @@ export const initMidwest: IRoundProps[] = [
     ],
   },
   {
-    title: "Sweet 16",
+    title: "",
     seeds: [
       {
         id: 1,
@@ -1034,7 +1034,7 @@ export const initMidwest: IRoundProps[] = [
     ],
   },
   {
-    title: "Elite 8",
+    title: "",
     seeds: [
       {
         id: 1,
