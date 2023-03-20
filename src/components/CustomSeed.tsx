@@ -1,7 +1,7 @@
 import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
 import React, { useContext, useState } from "react";
-import { DataContext } from "./Tournament";
-import { bottomTeam, chooseWinner, prob, simulate, topTeam } from "../util/calc";
+import { CompContext, DataContext } from "./Tournament";
+import { bottomTeam, chooseWinner, funcMap, prob, topTeam } from "../util/calc";
 
 const CustomSeed = ({
   seed,
@@ -10,6 +10,7 @@ const CustomSeed = ({
   seedIndex,
 }: IRenderSeedProps) => {
   const { teamData, setTeamData } = useContext(DataContext);
+  const { funcSelection } = useContext(CompContext)
   const [ probs, setProbs ] = useState<string[]>(['',''])
 
   const handleClick = () => {
@@ -18,7 +19,7 @@ const CustomSeed = ({
       chooseWinner([
         teamData.find((t) => t.team_slot === seed.teams[0].slot)!,
         teamData.find((t) => t.team_slot === seed.teams[1].slot)!,
-      ], simulate),
+      ], funcMap.get(funcSelection)!),
     ]);
   };
 

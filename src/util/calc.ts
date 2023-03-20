@@ -17,6 +17,8 @@ export const favorite = (teams: TeamStats[]): TeamStats => {
     return p1 > 0.5 ? teams[0] : teams[1]
 }
 
+export const topSeed = (teams: TeamStats[]): TeamStats => teams[0].team_seed <= teams[1].team_seed ? teams[0] : teams[1]
+
 export const chooseWinner = (teams: TeamStats[], comp: (t: TeamStats[]) => TeamStats): TeamStats => {
     const winner = comp(teams)
   return {
@@ -41,3 +43,9 @@ export const outcome = (data: TeamStats[], slot: number, dist: number, comp: (t:
     return [...data, ...o1, ...o2, winner]
   }
 }
+
+export const funcMap = new Map([
+  [ 'simulate', simulate ],
+  [ 'favorite', favorite ],
+  [ 'topSeed', topSeed ]
+  ])

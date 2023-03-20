@@ -12,13 +12,12 @@ import {
   rightFourInit,
 } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
-import { DataContext } from "./Tournament";
-import { outcome, simulate } from "../util/calc";
+import { CompContext, DataContext } from "./Tournament";
+import { funcMap, outcome } from "../util/calc";
 
 type Team = { [key: string]: any; name?: string };
 
 const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
-  console.log('mapBracket')
   let updateTeam = (t: Team): Team => {
     const tm = teamInfo.find((x) => x.team_slot === t.slot);
     return { ...t, name: tm?.team_name, slot: t.slot, rating: tm?.team_rating, seed: tm?.team_seed };
@@ -32,7 +31,6 @@ const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] =
 };
 
 const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
-  console.log('mapFinal')
   const team1 = teamInfo.find((t) => t.team_slot === dest.teams[0].slot);
   const team2 = teamInfo.find((t) => t.team_slot === dest.teams[1].slot);
   const result = {
@@ -49,6 +47,7 @@ type FullBracketProps = {};
 
 const FullBracket = (props: FullBracketProps) => {
   const { teamData, setTeamData } = useContext(DataContext);
+  const { funcSelection, setFuncSelection } = useContext(CompContext)
   const champion = useMemo(() => teamData.find((team) => team.team_slot === 63)?.team_name || "63", [teamData])
   const southRegion = useMemo(() => mapBracket(teamData, initSouth), [teamData])
   const eastRegion = useMemo(() => mapBracket(teamData, initEast), [teamData])
@@ -60,9 +59,14 @@ const FullBracket = (props: FullBracketProps) => {
 
   const handleClick = () => {
     setTeamData(
-      outcome(teamData, 63, 32,simulate)
+      outcome(teamData, 63, 32, funcMap.get(funcSelection)!)
     )
   };
+
+  const handleDropdown = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value)
+    setFuncSelection(e.target.value)
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -78,11 +82,17 @@ const FullBracket = (props: FullBracketProps) => {
         />
       </div>
       <div className="flex flex-col items-center border-blue-500 w-1/2">
+        <label>Comparison Function</label>
+        <select onChange={handleDropdown} value={funcSelection} className="mb-4 mt-2 px-4" title='selection'>
+          <option value='simulate'>simulate</option>
+          <option value='favorite'>favorite</option>
+          <option value='topSeed'>top seed</option>
+        </select>
         <button
           className="py-1 px-2 text-white bg-red-500 rounded hover:bg-red-700"
           onClick={handleClick}
         >
-          Simulate Tournament
+          Fill Bracket
         </button>
         <div className="my-2 flex border-red-500 w-1/2">
           <div className="w-1/2 flex">
