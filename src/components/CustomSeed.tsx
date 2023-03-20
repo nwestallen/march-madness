@@ -1,7 +1,7 @@
 import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
 import React, { useContext, useState } from "react";
 import { DataContext } from "./Tournament";
-import { bottomTeam, chooseWinner, prob } from "../util/calc";
+import { bottomTeam, chooseWinner, prob, simulate, topTeam } from "../util/calc";
 
 const CustomSeed = ({
   seed,
@@ -18,7 +18,27 @@ const CustomSeed = ({
       chooseWinner([
         teamData.find((t) => t.team_slot === seed.teams[0].slot)!,
         teamData.find((t) => t.team_slot === seed.teams[1].slot)!,
+      ], simulate),
+    ]);
+  };
+
+  const handleBottomClick = () => {
+    setTeamData([
+      ...teamData,
+      chooseWinner([
+        teamData.find((t) => t.team_slot === seed.teams[0].slot)!,
+        teamData.find((t) => t.team_slot === seed.teams[1].slot)!,
       ], bottomTeam),
+    ]);
+  };
+  
+  const handleTopClick = () => {
+    setTeamData([
+      ...teamData,
+      chooseWinner([
+        teamData.find((t) => t.team_slot === seed.teams[0].slot)!,
+        teamData.find((t) => t.team_slot === seed.teams[1].slot)!,
+      ], topTeam),
     ]);
   };
 
@@ -44,11 +64,11 @@ const CustomSeed = ({
           onMouseLeave={(e) => handleLeave(e)}
           onClick={(e) => console.log("clicked div")}
         >
-          <SeedTeam className="hover:text-slate-200">
-            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"} {probs[0]}
+          <SeedTeam onClick={handleTopClick} className="hover:text-slate-200">
+            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"} {seed.teams[0]?.seed} {probs[0]}
           </SeedTeam>
-          <SeedTeam className="hover:text-slate-200">
-            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"} {probs[1]}
+          <SeedTeam onClick={handleBottomClick} className="hover:text-slate-200">
+            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"} {seed.teams[1]?.seed} {probs[1]}
           </SeedTeam>
         </div>
       </SeedItem>

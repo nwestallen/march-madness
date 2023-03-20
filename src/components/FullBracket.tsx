@@ -20,7 +20,7 @@ type Team = { [key: string]: any; name?: string };
 const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
   let updateTeam = (t: Team): Team => {
     const tm = teamInfo.find((x) => x.team_slot === t.slot);
-    return { ...t, name: tm?.team_name, slot: t.slot, rating: tm?.team_rating };
+    return { ...t, name: tm?.team_name, slot: t.slot, rating: tm?.team_rating, seed: tm?.team_seed };
   };
   let updateTeams = (ts: Team[]): Team[] => ts.map((t) => updateTeam(t));
   let updateSeed = (s: ISeedProps): ISeedProps => ({...s,teams: updateTeams(s.teams),});
@@ -36,8 +36,8 @@ const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
   const result = {
     ...dest,
     teams: [
-      { ...team1, name: team1?.team_name, slot: dest.teams[0].slot, rating: team1?.team_rating },
-      { ...team2, name: team2?.team_name, slot: dest.teams[1].slot, rating: team2?.team_rating },
+      { ...team1, name: team1?.team_name, slot: dest.teams[0].slot, rating: team1?.team_rating, seed: team1?.team_seed },
+      { ...team2, name: team2?.team_name, slot: dest.teams[1].slot, rating: team2?.team_rating, seed: team2?.team_seed},
     ],
   };
   return result;

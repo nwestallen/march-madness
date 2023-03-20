@@ -4,5 +4,6 @@ export interface TeamStats {
     team_name: string
     team_region: string
     team_rating: number
+    team_seed?: number
 }
     

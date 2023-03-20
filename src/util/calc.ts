@@ -25,5 +25,6 @@ export const chooseWinner = (teams: TeamStats[], comp: (t: TeamStats[]) => TeamS
     team_rating: winner.team_rating,
     team_region: winner.team_region,
     team_slot: (teams[0].team_slot + teams[1].team_slot) / 2,
+    team_seed: winner.team_seed
   };
 }
