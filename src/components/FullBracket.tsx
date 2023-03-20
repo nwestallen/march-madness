@@ -13,7 +13,7 @@ import {
 } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import { DataContext } from "./Tournament";
-import { chooseWinner } from "../util/calc";
+import { chooseWinner, simulate } from "../util/calc";
 
 type Team = { [key: string]: any; name?: string };
 
@@ -36,8 +36,8 @@ const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
   const result = {
     ...dest,
     teams: [
-      { ...team1, name: team1?.team_name, slot: dest.teams[0].slot },
-      { ...team2, name: team2?.team_name, slot: dest.teams[1].slot },
+      { ...team1, name: team1?.team_name, slot: dest.teams[0].slot, rating: team1?.team_rating },
+      { ...team2, name: team2?.team_name, slot: dest.teams[1].slot, rating: team2?.team_rating },
     ],
   };
   return result;
@@ -47,7 +47,7 @@ const simulateRound = (teamStats: TeamStats[]): TeamStats[] => {
   const newTeams: TeamStats[] = [];
   teamStats.forEach((value: TeamStats, index: number) => {
     if (index % 2 === 0) {
-      newTeams.push(chooseWinner(teamStats.slice(index, index + 2)));
+      newTeams.push(chooseWinner(teamStats.slice(index, index + 2), simulate));
     }
   });
   return newTeams;
@@ -89,8 +89,7 @@ const FullBracket = (props: FullBracketProps) => {
         >
           Simulate Tournament
         </button>
-        <div className="py-2" />
-        <div className="flex border-red-500 w-1/2">
+        <div className="my-2 flex border-red-500 w-1/2">
           <div className="w-1/2 flex">
             <CustomSeed
               seed={mapFinal(teamData, leftFourInit)}
@@ -116,8 +115,7 @@ const FullBracket = (props: FullBracketProps) => {
             breakpoint={100}
           />
         </div>
-        <div className="py-2" />
-        <div className="flex flex-col items-center text-white bg-slate-800 px-8 rounded">
+        <div className="my-2 flex flex-col items-center text-white bg-slate-700 px-8 rounded">
           <h2>Champion</h2>
           <h3 className="text-sm">{champion}</h3>
         </div>

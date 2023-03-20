@@ -1,7 +1,7 @@
 import { Seed, SeedItem, SeedTeam, IRenderSeedProps } from "react-brackets";
 import React, { useContext, useState } from "react";
 import { DataContext } from "./Tournament";
-import { chooseWinner, prob } from "../util/calc";
+import { bottomTeam, chooseWinner, prob } from "../util/calc";
 
 const CustomSeed = ({
   seed,
@@ -13,13 +13,12 @@ const CustomSeed = ({
   const [ probs, setProbs ] = useState<string[]>(['',''])
 
   const handleClick = () => {
-    console.log("match click");
     setTeamData([
       ...teamData,
       chooseWinner([
         teamData.find((t) => t.team_slot === seed.teams[0].slot)!,
         teamData.find((t) => t.team_slot === seed.teams[1].slot)!,
-      ]),
+      ], bottomTeam),
     ]);
   };
 
@@ -40,22 +39,21 @@ const CustomSeed = ({
     <Seed mobileBreakpoint={breakpoint} style={{ fontSize: 12 }}>
       <SeedItem>
         <div
-          className="bg-slate-800"
+          className="bg-slate-700 hover:bg-slate-900"
           onMouseEnter={(e) => handleEnter(e)}
           onMouseLeave={(e) => handleLeave(e)}
           onClick={(e) => console.log("clicked div")}
         >
-          <SeedTeam style={{ color: "white" }}>
+          <SeedTeam className="hover:text-slate-200">
             {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"} {probs[0]}
           </SeedTeam>
-          <SeedTeam style={{ color: "white" }}>
+          <SeedTeam className="hover:text-slate-200">
             {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"} {probs[1]}
           </SeedTeam>
         </div>
       </SeedItem>
-      <div className="py-1" />
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded no-underline"
+        className="my-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-4 rounded no-underline"
         onClick={handleClick}
       >
         pick
