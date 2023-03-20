@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { IRoundProps, ISeedProps } from "react-brackets";
 import CustomSeed from "./CustomSeed";
 import RegionBracket from "./RegionBracket";
@@ -13,11 +13,12 @@ import {
 } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import { DataContext } from "./Tournament";
-import { chooseWinner, simulate } from "../util/calc";
+import { outcome, simulate } from "../util/calc";
 
 type Team = { [key: string]: any; name?: string };
 
 const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] => {
+  console.log('mapBracket')
   let updateTeam = (t: Team): Team => {
     const tm = teamInfo.find((x) => x.team_slot === t.slot);
     return { ...t, name: tm?.team_name, slot: t.slot, rating: tm?.team_rating, seed: tm?.team_seed };
@@ -31,6 +32,7 @@ const mapBracket = (teamInfo: TeamStats[], dest: IRoundProps[]): IRoundProps[] =
 };
 
 const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
+  console.log('mapFinal')
   const team1 = teamInfo.find((t) => t.team_slot === dest.teams[0].slot);
   const team2 = teamInfo.find((t) => t.team_slot === dest.teams[1].slot);
   const result = {
@@ -43,30 +45,23 @@ const mapFinal = (teamInfo: TeamStats[], dest: ISeedProps): ISeedProps => {
   return result;
 };
 
-const simulateRound = (teamStats: TeamStats[]): TeamStats[] => {
-  const newTeams: TeamStats[] = [];
-  teamStats.forEach((value: TeamStats, index: number) => {
-    if (index % 2 === 0) {
-      newTeams.push(chooseWinner(teamStats.slice(index, index + 2), simulate));
-    }
-  });
-  return newTeams;
-};
-
 type FullBracketProps = {};
 
 const FullBracket = (props: FullBracketProps) => {
   const { teamData, setTeamData } = useContext(DataContext);
-  const champion =
-    teamData.find((team) => team.team_slot === 63)?.team_name || "63";
+  const champion = useMemo(() => teamData.find((team) => team.team_slot === 63)?.team_name || "63", [teamData])
+  const southRegion = useMemo(() => mapBracket(teamData, initSouth), [teamData])
+  const eastRegion = useMemo(() => mapBracket(teamData, initEast), [teamData])
+  const westRegion = useMemo(() => mapBracket(teamData, initWest), [teamData])
+  const midwestRegion = useMemo(() => mapBracket(teamData, initMidwest), [teamData])
+  const leftSemi = useMemo(() => mapFinal(teamData, leftFourInit), [teamData])
+  const rightSemi = useMemo(() => mapFinal(teamData, rightFourInit), [teamData])
+  const finals = useMemo(() => mapFinal(teamData, finalInit), [teamData])
 
   const handleClick = () => {
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
-    setTeamData((t: TeamStats[]) => [...t, ...simulateRound(t)]);
+    setTeamData(
+      outcome(teamData, 63, 32,simulate)
+    )
   };
 
   return (
@@ -74,12 +69,12 @@ const FullBracket = (props: FullBracketProps) => {
       <div className="flex">
         <RegionBracket
           key="South"
-          roundProps={mapBracket(teamData, initSouth)}
+          roundProps={southRegion}
         />
         <RegionBracket
           key="Midwest"
           rtl
-          roundProps={mapBracket(teamData, initMidwest)}
+          roundProps={midwestRegion}
         />
       </div>
       <div className="flex flex-col items-center border-blue-500 w-1/2">
@@ -92,7 +87,7 @@ const FullBracket = (props: FullBracketProps) => {
         <div className="my-2 flex border-red-500 w-1/2">
           <div className="w-1/2 flex">
             <CustomSeed
-              seed={mapFinal(teamData, leftFourInit)}
+              seed={leftSemi}
               roundIndex={1}
               seedIndex={1}
               breakpoint={100}
@@ -100,7 +95,7 @@ const FullBracket = (props: FullBracketProps) => {
           </div>
           <div className="w-1/2 flex-inline">
             <CustomSeed
-              seed={mapFinal(teamData, rightFourInit)}
+              seed={rightSemi}
               roundIndex={1}
               seedIndex={1}
               breakpoint={100}
@@ -109,7 +104,7 @@ const FullBracket = (props: FullBracketProps) => {
         </div>
         <div className="flex border-green-500 w-1/4">
           <CustomSeed
-            seed={mapFinal(teamData, finalInit)}
+            seed={finals}
             roundIndex={1}
             seedIndex={1}
             breakpoint={100}
@@ -121,11 +116,11 @@ const FullBracket = (props: FullBracketProps) => {
         </div>
       </div>
       <div className="flex">
-        <RegionBracket key="East" roundProps={mapBracket(teamData, initEast)} />
+        <RegionBracket key="East" roundProps={eastRegion} />
         <RegionBracket
           key="West"
           rtl
-          roundProps={mapBracket(teamData, initWest)}
+          roundProps={westRegion}
         />
       </div>
     </div>

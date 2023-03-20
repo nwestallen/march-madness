@@ -25,6 +25,19 @@ export const chooseWinner = (teams: TeamStats[], comp: (t: TeamStats[]) => TeamS
     team_rating: winner.team_rating,
     team_region: winner.team_region,
     team_slot: (teams[0].team_slot + teams[1].team_slot) / 2,
-    team_seed: winner.team_seed
+    team_seed: winner.team_seed,
   };
+}
+
+export const outcome = (data: TeamStats[], slot: number, dist: number, comp: (t: TeamStats[]) => TeamStats): TeamStats[] => {
+  const row = data.find(d => d.team_slot === slot)
+  if(row !== undefined) {
+    return data
+  }
+  else{
+    const o1 = outcome(data, slot - dist, dist / 2, comp)
+    const o2 =  outcome(data, slot + dist, dist /2, comp)
+    const winner = chooseWinner([o1.find(d => d.team_slot === slot - dist)!, o2.find(d => d.team_slot === slot + dist)!], comp)
+    return [...data, ...o1, ...o2, winner]
+  }
 }
