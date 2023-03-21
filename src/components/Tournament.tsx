@@ -1,5 +1,4 @@
 import React, { createContext,  useState } from "react";
-import { mockTeams } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import FullBracket from "./FullBracket";
 
@@ -11,7 +10,7 @@ type DataContextType = {
 }
 
 const defaultDataContext: DataContextType = {
-    teamData: mockTeams,
+    teamData: [],
     setTeamData: (teamData) => {}
 }
 

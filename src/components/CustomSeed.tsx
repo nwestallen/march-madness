@@ -66,10 +66,10 @@ const CustomSeed = ({
           onClick={(e) => console.log("clicked div")}
         >
           <SeedTeam onClick={handleTopClick} className="hover:text-slate-200">
-            {seed.teams[0]?.name || seed.teams[0]?.slot || "TBD"} {seed.teams[0]?.seed} {probs[0]}
+            {seed.teams[0]?.name || "TBD"} {seed.teams[0]?.seed} {probs[0]}
           </SeedTeam>
           <SeedTeam onClick={handleBottomClick} className="hover:text-slate-200">
-            {seed.teams[1]?.name || seed.teams[1]?.slot || "TBD"} {seed.teams[1]?.seed} {probs[1]}
+            {seed.teams[1]?.name || "TBD"} {seed.teams[1]?.seed} {probs[1]}
           </SeedTeam>
         </div>
       </SeedItem>

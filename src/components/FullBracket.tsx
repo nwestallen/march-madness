@@ -9,11 +9,13 @@ import {
   initSouth,
   initWest,
   leftFourInit,
+  mockTeams,
   rightFourInit,
 } from "../constants/mockData";
 import { TeamStats } from "../constants/types";
 import { CompContext, DataContext } from "./Tournament";
 import { funcMap, outcome } from "../util/calc";
+import { read, utils } from "xlsx";
 
 type Team = { [key: string]: any; name?: string };
 
@@ -68,6 +70,28 @@ const FullBracket = (props: FullBracketProps) => {
     setFuncSelection(e.target.value)
   }
 
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files?.length) {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.onload = (ev: ProgressEvent<FileReader>) => {
+        const wb = read(ev.target!.result);
+        const sheets = wb.SheetNames;
+
+        if (sheets.length) {
+          const rows: any[] = utils.sheet_to_json(wb.Sheets[sheets[0]])
+          setTeamData(rows)
+        }
+      }
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  const handleReset = () => {
+    setTeamData(mockTeams)
+  }
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex">
@@ -82,6 +106,7 @@ const FullBracket = (props: FullBracketProps) => {
         />
       </div>
       <div className="flex flex-col items-center border-blue-500 w-1/2">
+        <input className="my-2 bg-white"title='file' type='file' name='file' onChange={handleImport} accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'/>
         <label>Comparison Function</label>
         <select onChange={handleDropdown} value={funcSelection} className="mb-4 mt-2 px-4" title='selection'>
           <option value='simulate'>simulate</option>
@@ -89,10 +114,14 @@ const FullBracket = (props: FullBracketProps) => {
           <option value='topSeed'>top seed</option>
         </select>
         <button
-          className="py-1 px-2 text-white bg-red-500 rounded hover:bg-red-700"
+          className="py-1 px-2 m-1 text-white bg-red-500 rounded hover:bg-red-700"
           onClick={handleClick}
-        >
-          Fill Bracket
+        >Fill Bracket
+        </button>
+        <button
+          className="py-1 px-2 m-1 text-white bg-green-500 rounded hover:bg-green-700"
+          onClick={handleReset}
+        >Reset
         </button>
         <div className="my-2 flex border-red-500 w-1/2">
           <div className="w-1/2 flex">
